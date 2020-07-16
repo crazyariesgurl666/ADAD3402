@@ -1,0 +1,49 @@
+// Simple Twitter API
+// Consumer and access keys have been removed for privacy
+// Developed from GATechDM Courses video tutorial
+// Using the twitter4j core library found at http://twitter4j.org
+
+ConfigurationBuilder cb = new ConfigurationBuilder();
+Twitter twitterInstance;
+Query queryForTwitter;
+
+ArrayList tweets;
+
+void setup () {
+  cb.setOAuthConsumerKey("CONSUMER-KEY-HERE");
+  cb.setOAuthConsumerSecret("CONSUMER-SECRET-HERE");
+  cb.setOAuthAccessToken("ACCESS-TOKEN-HERE");
+  cb.setOAuthAccessTokenSecret("ACCESS-SECRET-HERE");
+
+  twitterInstance = new TwitterFactory(cb.build()).getInstance();
+
+  queryForTwitter = new Query("#tinder");
+
+  size(640, 440);
+  FetchTweets();
+}
+
+void draw() {
+  background(0);
+  DrawTweets();
+}
+
+void DrawTweets() {
+  for (int i=0; i<tweets.size(); i++) {
+    Status t = (Status) tweets.get(i);
+    String user = t.getUser().getName();
+    String msg = t.getText();
+    text(user + ":" + msg, 20, 15+i*30-mouseY, width-20, 40);
+  }
+} //end of DrawTweets
+
+
+void FetchTweets() {
+  try {
+    QueryResult result = twitterInstance.search(queryForTwitter);
+    tweets = (ArrayList) result.getTweets();
+  } 
+  catch(TwitterException te) {
+    println("Couldn't connect: " + te);
+  } //end of catch TwitterExeption
+} //end of FetchTweets
