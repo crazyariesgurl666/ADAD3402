@@ -1,4 +1,4 @@
-String input = "Type something... ";
+String input = "Hi. Type something. Hit enter when finished.";
 PFont font;
 float offsetY = 0;
 
@@ -11,8 +11,8 @@ OscMessage myOscMessage;
 int val = 0;
 
 void setup() {
-  size(650, 650);
-  font = loadFont("SourceCodePro-Regular-18.vlw");
+  size(700, 850);
+  font = loadFont("LucidaSans-Typewriter-20.vlw");
   textFont(font);
 
   // send the osc messages on port 5000
@@ -21,13 +21,13 @@ void setup() {
 
 void draw() {
   background(255);
-  fill(255, 0, 0);
-  text(input, 20, 20+offsetY);
+  fill(0, 0, 255);
+  text(input, 20, 40+offsetY);
 }
 
 void keyPressed() {
   input += key;
-  if (input.length() % 55 == 0) input += '\n';
+  if (input.length() % 50 == 0) input += '\n';
 
   if (key < 127) { // to only pass original ascii
     val = 127;
